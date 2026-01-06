@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elbarry <elbarry@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 17:26:03 by elbarry           #+#    #+#             */
-/*   Updated: 2026/01/05 18:00:09 by elbarry          ###   ########.fr       */
+/*   Created: 2026/01/06 16:21:45 by elbarry           #+#    #+#             */
+/*   Updated: 2026/01/06 16:42:40 by elbarry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-#define PUSH_SWAP_H
+#include "../../include/push_swap.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-
-typedef struct s_node
+void	push_stack(t_stack *from, t_stack *to)
 {
-	int		value;
-	int		index;
-	s_node	*next;
-} t_node;
+	t_node	*tmp;
 
-typedef struct s_stack
+	if (from->size == 0)
+		return ;
+	
+	tmp = from->top;
+	from->top = tmp->next;
+
+	tmp->next = to->top;
+	to->top = tmp;
+	
+	from->size--;
+	to->size++;
+}
+
+void	pa(t_ps *ps)
 {
-	t_node	*top;
-	int		size;
-} t_stack;
+	push_stack(&ps->stack_b, &ps->stack_a);
+	write(1, "pa\n", 3);
+}
 
-
-
-typedef struct s_push_swap
+void	pb(t_ps *ps)
 {
-	t_stack stack_a;
-	t_stack	stack_b;
-} t_ps;
-
-
-#endif
+	push_stack(&ps->stack_a, &ps->stack_b);
+	write(1, "pb\n", 3);
+}
